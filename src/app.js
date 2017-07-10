@@ -13,6 +13,13 @@ const drawGreyLine = (canvasContext, coordinates) => {
     draw.line(canvasContext, coordinates);
 };
 
+const writeCanvasText = (canvasContext, width, height) => {
+    canvasContext.font = `${ Math.floor( width * height / 10000 )}px Arial`;
+    canvasContext.fillStyle = '#000000';
+    canvasContext.textAlign = 'center';
+    canvasContext.fillText('Canvas', width / 2, height / 2);
+};
+
 $(document).ready(() => {
     const canvas = $('#canvas')[0];
     const height = window.innerHeight;
@@ -23,4 +30,5 @@ $(document).ready(() => {
 
     drawRedRectangle(canvasContext, [[0, 0], [width / 2, height / 2]]);
     drawGreyLine(canvasContext, [[width / 2, height / 2], [width, height]]);
+    writeCanvasText(canvasContext, width, height);
 });

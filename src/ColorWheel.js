@@ -4,6 +4,26 @@ export default class ColorWheel {
         this.brightness = 0.05;
     }
 
+    rotateAntiClockwise() {
+        this.rotationAngle += 15;
+    }
+
+    rotateClockwise() {
+        this.rotationAngle -= 15;
+    }
+
+    increaseBrightness() {
+        if (this.brightness <= 0.95) {
+            this.brightness += 0.05;
+        }
+    }
+
+    decreaseBrightness() {
+        if (this.brightness >= 0.05) {
+            this.brightness -= 0.05;
+        }
+    }
+
     brightnessMultiplier() {
         return (1 - this.brightness) * 255;
     }

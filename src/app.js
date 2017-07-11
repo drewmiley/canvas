@@ -2,6 +2,8 @@ import $ from 'jquery';
 
 import ColorWheel from './ColorWheel';
 
+import * as KeyCodes from './KeyCodes';
+
 import * as draw from './draw';
 import * as set from './set';
 
@@ -38,13 +40,32 @@ $(document).ready(() => {
     drawGreyLine(canvasContext, [[width / 2, height / 2], [width, height]]);
     writeCanvasText(canvasContext, width, height);
 
-    canvas.on('mousemove' ,e => {
+    $(document).keydown(e => {
+        switch(e.keyCode) {
+            case KeyCodes.LEFT:
+                colorWheel.rotateAntiClockwise();
+                break;
+            case KeyCodes.RIGHT:
+                colorWheel.rotateClockwise();
+                break;
+            case KeyCodes.UP:
+                colorWheel.increaseBrightness();
+                break;
+            case KeyCodes.DOWN:
+                colorWheel.decreaseBrightness();
+                break;
+            default:
+                break;
+        }
+
+    });
+
+    canvas.mousemove(e => {
         if (mouseLocation) {
             const coordinates = [mouseLocation, [e.pageX, e.pageY]];
             set.strokeStyle(canvasContext, colorWheel.calculateColor(coordinates));
             draw.line(canvasContext, coordinates);
         }
         mouseLocation = [e.pageX, e.pageY];
-        return;
     });
 });

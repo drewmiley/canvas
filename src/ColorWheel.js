@@ -24,10 +24,6 @@ export default class ColorWheel {
         }
     }
 
-    brightnessMultiplier() {
-        return (1 - this.brightness) * 255;
-    }
-
     redCoefficient(angleDegrees) {
         return (Math.abs((angleDegrees) - 180) / 180) % 1;
     }
@@ -40,12 +36,16 @@ export default class ColorWheel {
         return (Math.abs((angleDegrees) - 60) / 180) % 1;
     }
 
+    rgbValue(coefficient) {
+        return Math.round(coefficient * (1 - this.brightness) * 255);
+    }
+
     calculateColor(coordinates) {
         const angleDegrees = Math.atan2(coordinates[1][1] - coordinates[0][1],
             coordinates[1][0] - coordinates[0][0]) * 180 / Math.PI;
-        const red = Math.round(this.redCoefficient(angleDegrees + this.rotationAngle) * this.brightnessMultiplier());
-        const green = Math.round(this.greenCoefficient(angleDegrees + this.rotationAngle) * this.brightnessMultiplier());
-        const blue = Math.round(this.blueCoefficient(angleDegrees + this.rotationAngle) * this.brightnessMultiplier());
+        const red = this.rgbValue(this.redCoefficient(angleDegrees + this.rotationAngle));
+        const green = this.rgbValue(this.greenCoefficient(angleDegrees + this.rotationAngle));
+        const blue = this.rgbValue(this.blueCoefficient(angleDegrees + this.rotationAngle));
         return `rgb(${ red }, ${ green }, ${ blue })`;
     }
 }

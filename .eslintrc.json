@@ -3,6 +3,9 @@
         "browser": true,
         "es6": true
     },
+    "globals": {
+        "rgb": true
+    },
     "extends": "eslint:recommended",
     "parserOptions": {
         "ecmaFeatures": {

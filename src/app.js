@@ -1,5 +1,7 @@
 import $ from 'jquery';
 
+import ColorWheel from './ColorWheel';
+
 import * as draw from './draw';
 import * as set from './set';
 
@@ -21,14 +23,28 @@ const writeCanvasText = (canvasContext, width, height) => {
 };
 
 $(document).ready(() => {
-    const canvas = $('#canvas')[0];
+    const canvas = $('#canvas');
     const height = window.innerHeight;
     const width = window.innerWidth;
-    canvas.height = height;
-    canvas.width = width;
-    const canvasContext = canvas.getContext('2d');
+    canvas[0].height = height;
+    canvas[0].width = width;
+    const canvasContext = canvas[0].getContext('2d');
+
+    const colorWheel = new ColorWheel();
+
+    let mouseLocation;
 
     drawRedRectangle(canvasContext, [[0, 0], [width / 2, height / 2]]);
     drawGreyLine(canvasContext, [[width / 2, height / 2], [width, height]]);
     writeCanvasText(canvasContext, width, height);
+
+    canvas.on('mousemove' ,e => {
+        if (mouseLocation) {
+            const coordinates = [mouseLocation, [e.pageX, e.pageY]];
+            set.strokeStyle(canvasContext, colorWheel.calculateColor(coordinates));
+            draw.line(canvasContext, coordinates);
+        }
+        mouseLocation = [e.pageX, e.pageY];
+        return;
+    });
 });

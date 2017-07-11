@@ -1,6 +1,8 @@
 export const line = (canvasContext, coordinates) => {
+    canvasContext.beginPath();
     canvasContext.moveTo(coordinates[0][0], coordinates[0][1]);
     canvasContext.lineTo(coordinates[1][0], coordinates[1][1]);
+    canvasContext.lineWidth = 10;
     canvasContext.stroke();
 };
 
